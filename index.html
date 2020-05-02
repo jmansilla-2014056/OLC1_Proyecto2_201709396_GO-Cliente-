@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<!--
+Copyright 2018 The Go Authors. All rights reserved.
+Use of this source code is governed by a BSD-style
+license that can be found in the LICENSE file.
+-->
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+<button onClick="load_file()" class="btn btn-primary">Cargar</button>
+<button class="analizarbutton btn btn-primary">Analizar</button>
+<button class="savebutton btn btn-primary">Guardar</button>
+<button class="enviarbutton btn btn-primary">X</button>
+<div class="tabbable">
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a id="codigo0" onClick="reply_click(this.id)" href="#tab0" data-toggle="tab">Codigo0</a>
+        </li>
+        <button class="addbutton btn tab-pane">+</button>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab0">
+            <textarea id="texto0" >I'm in Section 0.</textarea>
+        </div>
+    </div>
+</div>
+<input type="file" id="file">
+<script src="/js/tabControl.js"></script>
+<script src="/js/saveController.js"></script>
+</body>
+</html>
