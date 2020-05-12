@@ -41,10 +41,9 @@ function load_file(){
 }
 
 $(".analizarbutton").click(function () {
-
     $.post( "http://localhost:3000/input", { llave : document.getElementById(idGlobal).value}, function( data ) {
         alert(data.mensaje);
-        console.log(data.mensaje)
+        console.log(data.mensaje);
     }, "json");
 
 });
