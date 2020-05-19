@@ -9,12 +9,19 @@ license that can be found in the LICENSE file.
 
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-
+    <link rel="stylesheet" href="https://static.jstree.com/3.0.9/assets/dist/themes/default/style.min.css">
+    <link rel="stylesheet" href="css/texteditor.css">
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <!-- Other libraries from jstree -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.0.9/jstree.min.js"></script>
+
 </head>
 <body>
 <button onClick="load_file()" class="btn btn-primary">Cargar</button>
@@ -34,9 +41,31 @@ license that can be found in the LICENSE file.
             <textarea id="texto0" >I'm in Section 0.</textarea>
         </div>
     </div>
+    <input type="file" id="file">
+
+    <button onClick="load_tree()" class="btn btn-primary">Arbol AST</button>
+    <div class="container">
+        <div id="jstree-tree" class="well col-sm-3"></div>
+        <div id="jstree-result" class="col-sm-6">this is result</div>
+    </div>
+
+    <button onClick="load_errors()" class="btn btn-primary">Errores</button>
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+            </div><!-- /col -->
+            <div class="col-6">
+                <table id="table" class="table"></table>
+            </div><!-- col -->
+        </div><!-- /row -->
+    </div><!-- container -->
+
 </div>
-<input type="file" id="file">
+
+
+
 <script src="/js/tabControl.js"></script>
 <script src="/js/saveController.js"></script>
+<script src="/js/editorcount.js"></script>
 </body>
 </html>

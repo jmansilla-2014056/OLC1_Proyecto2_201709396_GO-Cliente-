@@ -1,0 +1,25 @@
+#code-editor {
+    position: absolute;
+    display: grid;
+    height: 80%;
+    width: 80%;
+    left: auto;
+    top: auto;
+    grid-template-columns: 50px auto;
+    background: black;
+}
+
+#editor {
+    resize: none;
+    font-size: 14px;
+    font-family: "Courier New", Courier;
+}
+
+#numbers {
+    padding: 2px;
+    overflow: hidden;
+    color: white;
+    text-align: right;
+    font-size: 14px;
+    font-family: "Courier New", Courier;
+}

@@ -40,15 +40,106 @@ function load_file(){
     fileReader.readAsText(file, "UTF-8")
 }
 
+
+let jsonData = [];
+let errorData = [
+    { error: 'China',         linea: 1379510000, columna: 1},
+    { error: 'India',         linea: 1330780000, columna: 2},
+    { error: 'United States', linea:  324788000, columna: 3},
+    { error: 'Indonesia',     linea:  260581000, columna: 4},
+    { error: 'Brazil',        linea:  206855000, columna: 5},
+];
+
+
 $(".analizarbutton").click(function () {
     $.post( "http://localhost:3000/input", { llave : document.getElementById(idGlobal).value}, function( data ) {
-        alert(data.mensaje);
-        console.log(data.mensaje);
+
+        errorData = [];
+        document.getElementById("table").innerHTML = '<table id="table" class="table"></table>'
+        updateTable();
+
+        $('#jstree-tree').jstree("destroy");
+        jsonData = data.tree;
+        //console.log(data.tree);
     }, "json");
 
 });
 
+function load_tree()
+{
 
+    $('#jstree-tree')
+        .on('changed.jstree', function (e, data) {
+            var objNode = data.instance.get_node(data.selected);
+            $('#jstree-result').html('Selected: <br/><strong>' + objNode.id+'-'+objNode.text+'</strong>');
+        })
+        .jstree({
+            core: {
+                data: jsonData
+            }
+        });
+}
+
+function load_errors(){
+    errorData = [
+        { error: 'China',         linea: 1379510000, columna: 1},
+        { error: 'India',         linea: 1330780000, columna: 2},
+    ];
+    document.getElementById("table").innerHTML = '<table id="table" class="table"></table>'
+    updateTable();
+}
+
+
+var dom = {
+    $data: $('#data'),
+    $table: $('#table'),
+};
+
+function json2table(json, $table) {
+    var cols = Object.keys(json[0]);
+
+    var headerRow = '';
+    var bodyRows = '';
+
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    $table.html('<thead><tr></tr></thead><tbody></tbody>');
+
+    cols.map(function(col) {
+        headerRow += '<th>' + capitalizeFirstLetter(col) + '</th>';
+    });
+
+    json.map(function(row) {
+        bodyRows += '<tr>';
+
+        cols.map(function(colName) {
+            bodyRows += '<td>' + row[colName] + '</td>';
+        })
+
+        bodyRows += '</tr>';
+    });
+
+    $table.find('thead tr').append(headerRow);
+    $table.find('tbody').append(bodyRows);
+}
+
+dom.$data.val(JSON.stringify(errorData));
+json2table(errorData, dom.$table);
+
+dom.$data.on('input', function () {
+    json2table(JSON.parse(dom.$data.val()), dom.$table);
+});
+
+function updateTable() {
+    dom.$data.val(JSON.stringify(errorData));
+    json2table(errorData, dom.$table);
+
+    dom.$data.on('input', function () {
+        json2table(JSON.parse(dom.$data.val()), dom.$table);
+    });
+}
 
 
 /*$(".addbutton").click(function(){
