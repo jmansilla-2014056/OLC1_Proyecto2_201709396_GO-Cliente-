@@ -25,9 +25,9 @@ license that can be found in the LICENSE file.
 </head>
 <body>
 <button onClick="load_file()" class="btn btn-primary">Cargar</button>
-<button class="analizarbutton btn btn-primary">Analizar</button>
 <button class="savebutton btn btn-primary">Guardar</button>
-<button class="enviarbutton btn btn-primary">X</button>
+<button class="analizarbutton btn btn-primary">Analizar</button>
+<input id="code">CodigoX</input>
 <div class="tabbable">
     <ul class="nav nav-tabs">
         <li class="active">
@@ -43,6 +43,7 @@ license that can be found in the LICENSE file.
     </div>
     <input type="file" id="file">
 
+    <input id="check" type="checkbox">
     <button onClick="load_tree()" class="btn btn-primary">Arbol AST</button>
     <div class="container">
         <div id="jstree-tree" class="well col-sm-3"></div>
@@ -66,6 +67,5 @@ license that can be found in the LICENSE file.
 
 <script src="/js/tabControl.js"></script>
 <script src="/js/saveController.js"></script>
-<script src="/js/editorcount.js"></script>
 </body>
 </html>

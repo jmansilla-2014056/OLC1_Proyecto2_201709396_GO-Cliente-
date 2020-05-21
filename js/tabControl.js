@@ -41,26 +41,33 @@ function load_file(){
 }
 
 
-let jsonData = [];
-let errorData = [
-    { error: 'China',         linea: 1379510000, columna: 1},
-    { error: 'India',         linea: 1330780000, columna: 2},
-    { error: 'United States', linea:  324788000, columna: 3},
-    { error: 'Indonesia',     linea:  260581000, columna: 4},
-    { error: 'Brazil',        linea:  206855000, columna: 5},
-];
-
+let astData = [];
+let errorData = [{descripcion:"",lexema:"",linea:null, columna:null}];
 
 $(".analizarbutton").click(function () {
-    $.post( "http://localhost:3000/input", { llave : document.getElementById(idGlobal).value}, function( data ) {
+    var comparador = document.getElementById("code").value
 
-        errorData = [];
+    $.post( "http://localhost:3000/input", { llave1 : document.getElementById(idGlobal).value,  llave2 : document.getElementById(comparador).value }, function( data ) {
+
+        errorData = [{descripcion:"",lexema:"",linea:null, columna:null}];
         document.getElementById("table").innerHTML = '<table id="table" class="table"></table>'
         updateTable();
 
         $('#jstree-tree').jstree("destroy");
-        jsonData = data.tree;
-        //console.log(data.tree);
+
+        alert(data.tree1);
+        alert(data.errores1);
+        alert(data.tree2);
+        alert(data.errores2);
+
+        if(document.getElementById("check").checked){
+            astData = JSON.parse(data.tree1);
+            errorData = JSON.parse(data.errores1);
+        }else{
+            astData = JSON.parse(data.tree2);
+            errorData = JSON.parse(data.errores2);
+        }
+
     }, "json");
 
 });
@@ -75,16 +82,12 @@ function load_tree()
         })
         .jstree({
             core: {
-                data: jsonData
+                data: astData
             }
         });
 }
 
 function load_errors(){
-    errorData = [
-        { error: 'China',         linea: 1379510000, columna: 1},
-        { error: 'India',         linea: 1330780000, columna: 2},
-    ];
     document.getElementById("table").innerHTML = '<table id="table" class="table"></table>'
     updateTable();
 }
