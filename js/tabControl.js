@@ -40,41 +40,76 @@ function load_file(){
     fileReader.readAsText(file, "UTF-8")
 }
 
-
+//GLOBALES
 let astData = [];
-let errorData = [{descripcion:"",lexema:"",linea:null, columna:null}];
+let globalTable = [{descripcion:"",lexema:"",linea:null, columna:null}];
+
+//INDIVIDUALES
+let tableError1 = [];
+let tableError2 = [];
+
+let ast1 = [];
+let ast2 = [];
+
+let tableClases = [];
+
 
 $(".analizarbutton").click(function () {
     var comparador = document.getElementById("code").value
 
     $.post( "http://localhost:3000/input", { llave1 : document.getElementById(idGlobal).value,  llave2 : document.getElementById(comparador).value }, function( data ) {
 
-        errorData = [{descripcion:"",lexema:"",linea:null, columna:null}];
+        globalTable = [{descripcion:"",lexema:"",linea:null, columna:null}];
         document.getElementById("table").innerHTML = '<table id="table" class="table"></table>'
         updateTable();
 
         $('#jstree-tree').jstree("destroy");
 
-        alert(data.tree1);
-        alert(data.errores1);
-        alert(data.tree2);
-        alert(data.errores2);
+        ast1 = JSON.parse(data.tree1);
+        ast2 = JSON.parse(data.tree2);
 
-        if(document.getElementById("check").checked){
-            astData = JSON.parse(data.tree1);
-            errorData = JSON.parse(data.errores1);
-        }else{
-            astData = JSON.parse(data.tree2);
-            errorData = JSON.parse(data.errores2);
-        }
+        tableError1 = JSON.parse(data.errores1);
+        tableError2 = JSON.parse(data.errores2);
+
+        tableClases = JSON.parse(data.clases);
 
     }, "json");
 
 });
 
+function load_tree1() {
+    $('#jstree-tree').jstree("destroy");
+    astData = ast1;
+    load_tree();
+}
+
+function load_tree2() {
+    $('#jstree-tree').jstree("destroy");
+    astData = ast2;
+    load_tree();
+}
+
+function load_errors1(){
+    globalTable = tableError1;
+    document.getElementById("table").innerHTML = '<table id="table" class="table"></table>'
+    updateTable();
+}
+
+function load_errors2(){
+    globalTable = tableError2;
+    document.getElementById("table").innerHTML = '<table id="table" class="table"></table>'
+    updateTable();
+}
+
+function load_reportC() {
+        globalTable = tableClases;
+        document.getElementById("table").innerHTML = '<table id="table" class="table"></table>'
+    updateTable();
+}
+
+
 function load_tree()
 {
-
     $('#jstree-tree')
         .on('changed.jstree', function (e, data) {
             var objNode = data.instance.get_node(data.selected);
@@ -85,11 +120,6 @@ function load_tree()
                 data: astData
             }
         });
-}
-
-function load_errors(){
-    document.getElementById("table").innerHTML = '<table id="table" class="table"></table>'
-    updateTable();
 }
 
 
@@ -128,16 +158,16 @@ function json2table(json, $table) {
     $table.find('tbody').append(bodyRows);
 }
 
-dom.$data.val(JSON.stringify(errorData));
-json2table(errorData, dom.$table);
+dom.$data.val(JSON.stringify(globalTable));
+json2table(globalTable, dom.$table);
 
 dom.$data.on('input', function () {
     json2table(JSON.parse(dom.$data.val()), dom.$table);
 });
 
 function updateTable() {
-    dom.$data.val(JSON.stringify(errorData));
-    json2table(errorData, dom.$table);
+    dom.$data.val(JSON.stringify(globalTable));
+    json2table(globalTable, dom.$table);
 
     dom.$data.on('input', function () {
         json2table(JSON.parse(dom.$data.val()), dom.$table);
