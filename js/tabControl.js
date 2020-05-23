@@ -52,7 +52,8 @@ let ast1 = [];
 let ast2 = [];
 
 let tableClases = [];
-
+let tableFunciones = [];
+let tableVariables = [];
 
 $(".analizarbutton").click(function () {
     var comparador = document.getElementById("code").value
@@ -72,6 +73,9 @@ $(".analizarbutton").click(function () {
         tableError2 = JSON.parse(data.errores2);
 
         tableClases = JSON.parse(data.clases);
+        tableFunciones = JSON.parse(data.funciones);
+        tableVariables = JSON.parse(data.variables);
+
 
     }, "json");
 
@@ -107,13 +111,24 @@ function load_reportC() {
     updateTable();
 }
 
+function load_reportF() {
+    globalTable = tableFunciones;
+    document.getElementById("table").innerHTML = '<table id="table" class="table"></table>'
+    updateTable();
+}
+
+function load_reportV() {
+    globalTable = tableVariables;
+    document.getElementById("table").innerHTML = '<table id="table" class="table"></table>'
+    updateTable();
+}
 
 function load_tree()
 {
     $('#jstree-tree')
         .on('changed.jstree', function (e, data) {
             var objNode = data.instance.get_node(data.selected);
-            $('#jstree-result').html('Selected: <br/><strong>' + objNode.id+'-'+objNode.text+'</strong>');
+            $('#jstree-result').html('Selected: <br/><strong>' +  'id:' + objNode.id+ ' - ' +objNode.text+ ' -  tipo:' +  objNode.tipo1 +'</strong>');
         })
         .jstree({
             core: {
